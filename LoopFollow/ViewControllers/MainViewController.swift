@@ -132,6 +132,8 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
     var lastOverrideEndTime: TimeInterval = 0
     var topBG: Float = UserDefaultsRepository.minBGScale.value
     var lastOverrideAlarm: TimeInterval = 0
+    //Auggie add A1C to watch display
+    var latestA1C = ""
     
     // share
     var bgDataShare: [ShareGlucoseData] = []
@@ -689,7 +691,8 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
             
             var eventStartDate = Date(timeIntervalSince1970: self.bgData[self.bgData.count - 1].date)
 //                if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Calendar start date") }
-            var eventEndDate = eventStartDate.addingTimeInterval(60 * 10)
+            //Auggie - try 5 minute calendar entries
+            var eventEndDate = eventStartDate.addingTimeInterval(60 * 5)
             var  eventTitle = UserDefaultsRepository.watchLine1.value
             if (UserDefaultsRepository.watchLine2.value.count > 1) {
                 eventTitle += "\n" + UserDefaultsRepository.watchLine2.value
@@ -710,7 +713,8 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
             if deltaTime > 9 {
                 // write old BG reading and continue pushing out end date to show last entry
                 minAgo = String(Int(deltaTime)) + " min"
-                eventEndDate = eventStartDate.addingTimeInterval((60 * 10) + (deltaTime * 60))
+                //Auggie - try 5 minute calendar entries
+                eventEndDate = eventStartDate.addingTimeInterval((60 * 5) + (deltaTime * 60))
             }
             var cob = "0"
             if self.latestCOB != "" {
@@ -724,6 +728,34 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
             if self.latestIOB != "" {
                 iob = self.latestIOB
             }
+            
+            //Auggie - do some work here for additional stats on watch/calendar entry
+            var lastDayOfData = self.bgData
+            let graphHours = 24 * UserDefaultsRepository.downloadDays.value
+            // If we loaded more than 1 day of data, only use the last day for the stats
+            if graphHours > 24 {
+                let oneDayAgo = dateTimeUtils.getTimeIntervalNHoursAgo(N: 24)
+                var startIndex = 0
+                while startIndex < self.bgData.count && self.bgData[startIndex].date < oneDayAgo {
+                    startIndex += 1
+                }
+                lastDayOfData = Array(self.bgData.dropFirst(startIndex))
+            }
+            
+            let stats = StatsData(bgData: lastDayOfData)
+            
+            //Auggie make eA1C an option
+            let a1c = "\(round(stats.a1C * 10) / 10.0)"
+            eventTitle = eventTitle.replacingOccurrences(of: "%A1C%", with: a1c)
+        
+            //Auggie make time in range an option
+            let tir = String(format:"%.0f%", stats.percentRange)// + "%"
+            eventTitle = eventTitle.replacingOccurrences(of: "%TIR%", with: tir)
+            
+            //Auggie make average BG an option
+            let avg = bgUnits.toDisplayUnits(String(format:"%.0f%", stats.avgBG))
+            eventTitle = eventTitle.replacingOccurrences(of: "%AVG%", with: avg)
+        
             eventTitle = eventTitle.replacingOccurrences(of: "%MINAGO%", with: minAgo)
             eventTitle = eventTitle.replacingOccurrences(of: "%IOB%", with: iob)
             eventTitle = eventTitle.replacingOccurrences(of: "%COB%", with: cob)
