@@ -527,7 +527,10 @@ extension MainViewController {
         }
         
         // Move to current reading everytime new readings load
-        BGChart.moveViewToAnimated(xValue: dateTimeUtils.getNowTimeIntervalUTC() - (BGChart.visibleXRange * 0.7), yValue: 0.0, axis: .right, duration: 1, easingOption: .easeInBack)
+        //Auggie - eventually lets put this behind a toggle option in the settings view
+        if 1==2 {
+            BGChart.moveViewToAnimated(xValue: dateTimeUtils.getNowTimeIntervalUTC() - (BGChart.visibleXRange * 0.7), yValue: 0.0, axis: .right, duration: 1, easingOption: .easeInBack)
+        }
     }
     
     func updatePredictionGraph(color: UIColor? = nil) {
