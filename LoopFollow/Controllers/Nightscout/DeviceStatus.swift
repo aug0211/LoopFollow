@@ -93,7 +93,7 @@ extension MainViewController {
                 UserDefaultsRepository.alertLastLoopTime.value = lastLoopTime
                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "lastLoopTime: " + String(lastLoopTime)) }
                 if let failure = lastLoopRecord["failureReason"] {
-                    LoopStatusLabel.text = "X"
+                    //LoopStatusLabel.text = "X"
                     latestLoopStatusString = "X"
                     if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Loop Failure: X") }
                 } else {
@@ -155,17 +155,17 @@ extension MainViewController {
                             if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "lastBGTime: " + String(lastBGTime)) }
                             if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "wasEnacted: " + String(wasEnacted)) }
                             if tempBasalTime > lastBGTime && !wasEnacted {
-                                LoopStatusLabel.text = "⏀"
+                                //LoopStatusLabel.text = "⏀"
                                 latestLoopStatusString = "⏀"
                                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Open Loop: recommended temp. temp time > bg time, was not enacted") }
                             } else {
-                                LoopStatusLabel.text = "↻"
+                                //LoopStatusLabel.text = "↻"
                                 latestLoopStatusString = "↻"
                                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Looping: recommended temp, but temp time is < bg time and/or was enacted") }
                             }
                         }
                     } else {
-                        LoopStatusLabel.text = "↻"
+                        //LoopStatusLabel.text = "↻"
                         latestLoopStatusString = "↻"
                         if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Looping: no recommended temp") }
                     }
@@ -173,7 +173,7 @@ extension MainViewController {
                 }
                 
                 if ((TimeInterval(Date().timeIntervalSince1970) - lastLoopTime) / 60) > 15 {
-                    LoopStatusLabel.text = "⚠"
+                    //LoopStatusLabel.text = "⚠"
                     latestLoopStatusString = "⚠"
                 }
                 latestLoopTime = lastLoopTime
@@ -185,7 +185,7 @@ extension MainViewController {
                 UserDefaultsRepository.alertLastLoopTime.value = lastLoopTime
                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "lastLoopTime: " + String(lastLoopTime)) }
                 if let failure = lastLoopRecord["failureReason"] {
-                    LoopStatusLabel.text = "X"
+                    //LoopStatusLabel.text = "X"
                     latestLoopStatusString = "X"
                     if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Loop Failure: X") }
                 } else {
@@ -272,7 +272,7 @@ extension MainViewController {
                         if let eventualdata = lastLoopRecord["enacted"] as? [String:AnyObject] {
                             if let eventualBGValue = eventualdata["eventualBG"] as? NSNumber {
                                 let eventualBGStringValue = String(describing: eventualBGValue)
-                                PredictionLabel.text = bgUnits.toDisplayUnits(eventualBGStringValue)
+                                PredictionLabel.text = graphtype + " ⇢ " + bgUnits.toDisplayUnits(eventualBGStringValue)
                             }
                         }
 
@@ -308,24 +308,24 @@ extension MainViewController {
                             if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "lastBGTime: " + String(lastBGTime)) }
                             if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "wasEnacted: " + String(wasEnacted)) }
                             if tempBasalTime > lastBGTime && !wasEnacted {
-                                LoopStatusLabel.text = "⏀"
+                                //LoopStatusLabel.text = "⏀"
                                 latestLoopStatusString = "⏀"
                                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Open Loop: recommended temp. temp time > bg time, was not enacted") }
                             } else {
-                                LoopStatusLabel.text = "↻"
+                                //LoopStatusLabel.text = "↻"
                                 latestLoopStatusString = "↻"
                                 if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Looping: recommended temp, but temp time is < bg time and/or was enacted") }
                             }
                         }
                     } else {
-                        LoopStatusLabel.text = "↻"
+                        //LoopStatusLabel.text = "↻"
                         latestLoopStatusString = "↻"
                         if UserDefaultsRepository.debugLog.value { self.writeDebugLog(value: "Looping: no recommended temp") }
                     }
                     
                 }
                 if ((TimeInterval(Date().timeIntervalSince1970) - lastLoopTime) / 60) > 15 {
-                    LoopStatusLabel.text = "⚠"
+                    //LoopStatusLabel.text = "⚠"
                     latestLoopStatusString = "⚠"
                 }
                 latestLoopTime = lastLoopTime

@@ -25,7 +25,7 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
     @IBOutlet weak var Console: UITableViewCell!
     @IBOutlet weak var DragBar: UIImageView!
     @IBOutlet weak var PredictionLabel: UILabel!
-    @IBOutlet weak var LoopStatusLabel: UILabel!
+    //@IBOutlet weak var LoopStatusLabel: UILabel!
     @IBOutlet weak var statsPieChart: PieChartView!
     @IBOutlet weak var statsLowPercent: UILabel!
     @IBOutlet weak var statsInRangePercent: UILabel!
@@ -472,7 +472,7 @@ class MainViewController: UIViewController, UITableViewDataSource, ChartViewDele
             isEnabled = false
         }
         
-        LoopStatusLabel.isHidden = isHidden
+        //LoopStatusLabel.isHidden = isHidden
         PredictionLabel.isHidden = isHidden
         infoTable.isHidden = isHidden
         
