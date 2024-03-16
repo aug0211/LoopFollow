@@ -653,8 +653,10 @@ extension MainViewController {
     
     func updateBolusGraph() {
         var dataIndex = 3
-        var yTop: Double = 370
-        var yBottom: Double = 345
+        //Auggie - keep graph below 300
+        //Was 370 and 345
+        var yTop: Double = 300
+        var yBottom: Double = 275
         var mainChart = BGChart.lineData!.dataSets[dataIndex] as! LineChartDataSet
         var smallChart = BGChartFull.lineData!.dataSets[dataIndex] as! LineChartDataSet
         mainChart.clear()
@@ -1184,8 +1186,11 @@ extension MainViewController {
     
     func updateOverrideGraph() {
         var dataIndex = 6
-        var yTop: Double = Double(topBG - 5)
-        var yBottom: Double = Double(topBG - 25)
+        //Auggie - was topBG-5
+        //var yTop: Double = Double(topBG)
+        //var yBottom: Double = Double(topBG - 25)
+        var yTop: Double = 300
+        var yBottom: Double = 275
         var chart = BGChart.lineData!.dataSets[dataIndex] as! LineChartDataSet
         var smallChart = BGChartFull.lineData!.dataSets[dataIndex] as! LineChartDataSet
         chart.clear()
