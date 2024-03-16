@@ -221,9 +221,14 @@ extension MainViewController {
 
                     }
                     
-                    //Auggie - override name
+                    //Override / temp target name - Auggie & dsnallfot
                     let recentOverride = overrideGraphData.last
-                    let overrideName = recentOverride?.notes
+                    let overrideName: String?
+                    if let notes = recentOverride?.notes, !notes.isEmpty {
+                        overrideName = notes
+                    } else {
+                        overrideName = recentOverride?.reason
+                    }
                     let recentEnd: TimeInterval = recentOverride?.endDate ?? 0
                     let now = dateTimeUtils.getNowTimeIntervalUTC()
                     if recentEnd >= now {
